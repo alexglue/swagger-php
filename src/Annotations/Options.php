@@ -15,7 +15,7 @@ class Options extends Operation
     public $method = 'options';
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Path'
-    ];
+    );
 }

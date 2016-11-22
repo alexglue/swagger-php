@@ -16,7 +16,7 @@ AnnotationRegistry::registerLoader(function ($class) {
         if (strtolower(substr($class, 0, strlen($namespace))) === strtolower($namespace)) {
             $loaded = class_exists($class);
             if (!$loaded && $namespace === 'Swagger\Annotations\\') {
-                if (in_array(strtolower(substr($class, 20)), ['model', 'resource', 'api'])) { // Detected an 1.x annotation?
+                if (in_array(strtolower(substr($class, 20)), array('model', 'resource', 'api'))) { // Detected an 1.x annotation?
                     throw new Exception('The annotation @SWG\\' . substr($class, 20) . '() is deprecated. Found in ' . Analyser::$context . "\nFor more information read the migration guide: https://github.com/zircote/swagger-php/blob/master/docs/Migrating-to-v2.md");
                 }
             }
@@ -35,7 +35,7 @@ class Analyser
      * List of namespaces that should be detected by the doctrine annotation parser.
      * @var array
      */
-    public static $whitelist = ['Swagger\Annotations\\'];
+    public static $whitelist = array('Swagger\Annotations\\');
 
     /**
      * Allows Annotation classes to know the context of the annotation that is being processed.
@@ -53,7 +53,7 @@ class Analyser
         if ($docParser === null) {
             $docParser = new DocParser();
             $docParser->setIgnoreNotImportedAnnotations(true);
-            $docParser->setImports(['swg' => 'Swagger\Annotations']); // Use @SWG\* for swagger annotations.
+            $docParser->setImports(array('swg' => 'Swagger\Annotations')); // Use @SWG\* for swagger annotations.
         }
         $this->docParser = $docParser;
     }
@@ -68,14 +68,14 @@ class Analyser
     public function fromComment($comment, $context = null)
     {
         if ($context === null) {
-            $context = new Context(['comment' => $comment]);
+            $context = new Context(array('comment' => $comment));
         } else {
             $context->comment = $comment;
         }
         try {
             self::$context = $context;
             if ($context->is('annotations') === false) {
-                $context->annotations = [];
+                $context->annotations = array();
             }
             $comment = preg_replace_callback('/^[\t ]*\*[\t ]+/m', function ($match) {
                 // Replace leading tabs with spaces.
@@ -98,7 +98,7 @@ class Analyser
             } else {
                 Logger::warning($e);
             }
-            return [];
+            return array();
         }
     }
 }

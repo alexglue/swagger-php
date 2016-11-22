@@ -125,14 +125,14 @@ class Header extends AbstractAnnotation
     public $multipleOf;
 
     /** @inheritdoc */
-    public static $_required = ['type'];
+    public static $_required = array('type');
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'header' => 'string',
         'description' => 'string',
         'format' => 'string',
-        'collectionFormat' => ['csv', 'ssv', 'tsv', 'pipes', 'multi'],
+        'collectionFormat' => array('csv', 'ssv', 'tsv', 'pipes', 'multi'),
         'maximum' => 'number',
         'exclusiveMaximum' => 'boolean',
         'minimum' => 'number',
@@ -144,15 +144,15 @@ class Header extends AbstractAnnotation
         'minItems' => 'integer',
         'uniqueItems' => 'boolean',
         'multipleOf' => 'integer',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Items' => 'items'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Response'
-    ];
+    );
 }

@@ -51,21 +51,21 @@ class Response extends AbstractAnnotation
     public $examples;
 
     /** @inheritdoc */
-    public static $_required = ['description'];
+    public static $_required = array('description');
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'description' => 'string',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Schema' => 'schema',
-        'Swagger\Annotations\Header' => ['headers', 'header']
-    ];
+        'Swagger\Annotations\Header' => array('headers', 'header')
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Operation',
         'Swagger\Annotations\Get',
         'Swagger\Annotations\Post',
@@ -75,5 +75,5 @@ class Response extends AbstractAnnotation
         'Swagger\Annotations\Head',
         'Swagger\Annotations\Options',
         'Swagger\Annotations\Swagger'
-    ];
+    );
 }

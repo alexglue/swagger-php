@@ -18,10 +18,10 @@ class Property extends Schema
     public $property;
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Definition',
         'Swagger\Annotations\Schema',
         'Swagger\Annotations\Property',
         'Swagger\Annotations\Items',
-    ];
+    );
 }

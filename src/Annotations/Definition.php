@@ -18,12 +18,12 @@ class Definition extends Schema
     public $definition;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'definition' => 'string'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Swagger'
-    ];
+    );
 }

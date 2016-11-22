@@ -27,16 +27,16 @@ class ExternalDocumentation extends AbstractAnnotation
     public $url;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'description' => 'string',
         'url' => 'string',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_required = ['url'];
+    public static $_required = array('url');
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Swagger',
         'Swagger\Annotations\Tag',
         'Swagger\Annotations\Schema',
@@ -51,5 +51,5 @@ class ExternalDocumentation extends AbstractAnnotation
         'Swagger\Annotations\Head',
         'Swagger\Annotations\Options',
         'Swagger\Annotations\Items',
-    ];
+    );
 }

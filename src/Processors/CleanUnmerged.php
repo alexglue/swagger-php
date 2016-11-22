@@ -29,7 +29,7 @@ class CleanUnmerged
                 }
             }
         }
-        $analysis->swagger->_unmerged = [];
+        $analysis->swagger->_unmerged = array();
         foreach ($unmerged as $annotation) {
             $analysis->swagger->_unmerged[] = $annotation;
         }

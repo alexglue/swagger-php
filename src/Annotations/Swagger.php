@@ -63,13 +63,13 @@ class Swagger extends AbstractAnnotation
      * The available paths and operations for the API.
      * @var Path[]
      */
-    public $paths = [];
+    public $paths = array();
 
     /**
      * An object to hold data types produced and consumed by operations.
      * @var Definition[]
      */
-    public $definitions = [];
+    public $definitions = array();
 
     /**
      * An object to hold parameters that can be used across operations. This property does not define global parameters for all operations.
@@ -113,31 +113,31 @@ class Swagger extends AbstractAnnotation
     public $_analysis;
 
     /** @inheritdoc */
-    public static $_blacklist = ['_context', '_unmerged', '_analysis'];
+    public static $_blacklist = array('_context', '_unmerged', '_analysis');
     
     /** @inheritdoc */
-    public static $_required = ['swagger', 'info', 'paths'];
+    public static $_required = array('swagger', 'info', 'paths');
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Info' => 'info',
-        'Swagger\Annotations\Path' => ['paths', 'path'],
-        'Swagger\Annotations\Definition' => ['definitions', 'definition'],
-        'Swagger\Annotations\Tag' => ['tags'],
-        'Swagger\Annotations\Parameter' => ['parameters', 'parameter'],
-        'Swagger\Annotations\Response' => ['responses', 'response'],
+        'Swagger\Annotations\Path' => array('paths', 'path'),
+        'Swagger\Annotations\Definition' => array('definitions', 'definition'),
+        'Swagger\Annotations\Tag' => array('tags'),
+        'Swagger\Annotations\Parameter' => array('parameters', 'parameter'),
+        'Swagger\Annotations\Response' => array('responses', 'response'),
         'Swagger\Annotations\ExternalDocumentation' => 'externalDocs',
-        'Swagger\Annotations\SecurityScheme' => ['securityDefinitions', 'securityDefinition']
-    ];
+        'Swagger\Annotations\SecurityScheme' => array('securityDefinitions', 'securityDefinition')
+    );
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'host' => 'string',
         'basePath' => 'string',
         'schemes' => '[scheme]',
         'consumes' => '[string]',
         'produces' => '[string]',
-    ];
+    );
 
     /**
      * Save the swagger documentation to a file.

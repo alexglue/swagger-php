@@ -41,7 +41,7 @@ class Serializer
     private static function getDefinedNames()
     {
         if (static::$cachedNames === null) {
-            static::$cachedNames = [];
+            static::$cachedNames = array();
             $reflection = new \ReflectionClass(__CLASS__);
             static::$cachedNames = $reflection->getConstants();
         }
@@ -132,7 +132,7 @@ class Serializer
 
             // property is an annotation array
             if (is_array($declaration) && count($declaration) === 1 && $declaration[0] === $property) {
-                $annotationArr = [];
+                $annotationArr = array();
                 foreach ($value as $v) {
                     $annotationArr[] = $this->doDeserialize($v, $class);
                 }
@@ -143,7 +143,7 @@ class Serializer
             // property is an annotation hash map
             if (is_array($declaration) && count($declaration) === 2 && $declaration[0] === $property) {
                 $key = $declaration[1];
-                $annotationHash = [];
+                $annotationHash = array();
                 foreach ($value as $k => $v) {
                     $annotation = $this->doDeserialize($v, $class);
                     $annotation->$key = $k;

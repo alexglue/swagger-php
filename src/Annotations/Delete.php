@@ -15,7 +15,7 @@ class Delete extends Operation
     public $method = 'delete';
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Path'
-    ];
+    );
 }

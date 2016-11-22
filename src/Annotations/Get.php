@@ -15,7 +15,7 @@ class Get extends Operation
     public $method = 'get';
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Path'
-    ];
+    );
 }

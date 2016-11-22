@@ -203,11 +203,11 @@ class Schema extends AbstractAnnotation
     public $additionalProperties;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'description' => 'string',
         'required' => '[string]',
         'format' => 'string',
-        'collectionFormat' => ['csv', 'ssv', 'tsv', 'pipes', 'multi'],
+        'collectionFormat' => array('csv', 'ssv', 'tsv', 'pipes', 'multi'),
         'maximum' => 'number',
         'exclusiveMaximum' => 'boolean',
         'minimum' => 'number',
@@ -219,19 +219,19 @@ class Schema extends AbstractAnnotation
         'minItems' => 'integer',
         'uniqueItems' => 'boolean',
         'multipleOf' => 'integer',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Items' => 'items',
-        'Swagger\Annotations\Property' => ['properties', 'property'],
+        'Swagger\Annotations\Property' => array('properties', 'property'),
         'Swagger\Annotations\ExternalDocumentation' => 'externalDocs',
         'Swagger\Annotations\Xml' => 'xml'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Response',
         'Swagger\Annotations\Parameter',
-    ];
+    );
 }

@@ -161,16 +161,16 @@ class Parameter extends AbstractAnnotation
     public $multipleOf;
 
     /** @inheritdoc */
-    public static $_required = ['name', 'in'];
+    public static $_required = array('name', 'in');
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'name' => 'string',
-        'in' => ['query', 'header', 'path', 'formData', 'body'],
+        'in' => array('query', 'header', 'path', 'formData', 'body'),
         'description' => 'string',
         'required' => 'boolean',
         'format' => 'string',
-        'collectionFormat' => ['csv', 'ssv', 'tsv', 'pipes', 'multi'],
+        'collectionFormat' => array('csv', 'ssv', 'tsv', 'pipes', 'multi'),
         'maximum' => 'number',
         'exclusiveMaximum' => 'boolean',
         'minimum' => 'number',
@@ -182,16 +182,16 @@ class Parameter extends AbstractAnnotation
         'minItems' => 'integer',
         'uniqueItems' => 'boolean',
         'multipleOf' => 'integer',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Items' => 'items',
         'Swagger\Annotations\Schema' => 'schema'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Operation',
         'Swagger\Annotations\Get',
         'Swagger\Annotations\Post',
@@ -202,10 +202,10 @@ class Parameter extends AbstractAnnotation
         'Swagger\Annotations\Head',
         'Swagger\Annotations\Options',
         'Swagger\Annotations\Swagger'
-    ];
+    );
 
     /** @inheritdoc */
-    public function validate($parents = [], $skip = [])
+    public function validate($parents = array(), $skip = array())
     {
         if (in_array($this, $skip, true)) {
             return true;
@@ -218,7 +218,7 @@ class Parameter extends AbstractAnnotation
                     $valid = false;
                 }
             } else {
-                $validTypes = ['string', 'number', 'integer', 'boolean', 'array', 'file'];
+                $validTypes = array('string', 'number', 'integer', 'boolean', 'array', 'file');
                 if ($this->type === null) {
                     Logger::notice($this->identity() . '->type is required when ' . $this->_identity([]) . '->in == "' . $this->in . '" in ' . $this->_context);
                     $valid = false;
@@ -240,6 +240,6 @@ class Parameter extends AbstractAnnotation
     /** @inheritdoc */
     public function identity()
     {
-        return parent::_identity(['name', 'in']);
+        return parent::_identity(array('name', 'in'));
     }
 }

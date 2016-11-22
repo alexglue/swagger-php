@@ -44,19 +44,19 @@ class Xml extends AbstractAnnotation
     public $wrapped;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'name' => 'string',
         'namespace' => 'string',
         'prefix' => 'string',
         'attribute' => 'boolean',
         'wrapped' => 'boolean'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Schema',
         'Swagger\Annotations\Property',
         'Swagger\Annotations\Definition',
         'Swagger\Annotations\Items',
-    ];
+    );
 }

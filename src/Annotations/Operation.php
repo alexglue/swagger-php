@@ -119,10 +119,10 @@ abstract class Operation extends AbstractAnnotation
     public $security;
 
     /** @inheritdoc */
-    public static $_required = ['responses'];
+    public static $_required = array('responses');
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'path' => 'string',
         'method' => 'string',
         'tags' => '[string]',
@@ -132,14 +132,14 @@ abstract class Operation extends AbstractAnnotation
         'produces' => '[string]',
         'schemes' => '[scheme]',
         'deprecated' => 'boolean'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
-        'Swagger\Annotations\Parameter' => ['parameters'],
-        'Swagger\Annotations\Response' => ['responses', 'response'],
+    public static $_nested = array(
+        'Swagger\Annotations\Parameter' => array('parameters'),
+        'Swagger\Annotations\Response' => array('responses', 'response'),
         'Swagger\Annotations\ExternalDocumentation' => 'externalDocs'
-    ];
+    );
 
     /** @inheritdoc */
     public function jsonSerialize()
@@ -150,7 +150,7 @@ abstract class Operation extends AbstractAnnotation
         return $data;
     }
 
-    public function validate($parents = [], $skip = [])
+    public function validate($parents = array(), $skip = array())
     {
         if (in_array($this, $skip, true)) {
             return true;
@@ -159,7 +159,7 @@ abstract class Operation extends AbstractAnnotation
         if ($this->responses !== null) {
             foreach ($this->responses as $response) {
                 if ($response->response !== 'default' && preg_match('/^[12345]{1}[0-9]{2}$/', $response->response) === 0) {
-                    Logger::notice('Invalid value "' . $response->response . '" for ' . $response->_identity([]) . '->response, expecting "default" or a HTTP Status Code in ' . $response->_context);
+                    Logger::notice('Invalid value "' . $response->response . '" for ' . $response->_identity(array()) . '->response, expecting "default" or a HTTP Status Code in ' . $response->_context);
                 }
             }
         }

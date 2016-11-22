@@ -36,7 +36,7 @@ class MergeIntoSwagger
         $analysis->swagger->_analysis = $analysis;
 
         // Merge all annotations into the target swagger
-        $remaining = [];
+        $remaining = array();
         foreach ($analysis->annotations as $annotation) {
             if ($annotation === $swagger) {
                 continue;

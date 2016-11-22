@@ -15,7 +15,7 @@ class Patch extends Operation
     public $method = 'patch';
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Path'
-    ];
+    );
 }

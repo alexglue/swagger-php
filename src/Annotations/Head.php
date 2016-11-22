@@ -15,7 +15,7 @@ class Head extends Operation
     public $method = 'head';
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Path'
-    ];
+    );
 }

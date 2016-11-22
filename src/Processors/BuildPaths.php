@@ -18,7 +18,7 @@ class BuildPaths
 {
     public function __invoke(Analysis $analysis)
     {
-        $paths = [];
+        $paths = array();
         // Merge @SWG\Paths with the same path.
         foreach ($analysis->swagger->paths as $annotation) {
             if (empty($annotation->path)) {

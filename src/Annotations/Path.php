@@ -71,12 +71,12 @@ class Path extends AbstractAnnotation
     public $parameters;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'path' => 'string'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Get' => 'get',
         'Swagger\Annotations\Post' => 'post',
         'Swagger\Annotations\Put' => 'put',
@@ -84,11 +84,11 @@ class Path extends AbstractAnnotation
         'Swagger\Annotations\Patch' => 'patch',
         'Swagger\Annotations\Head' => 'head',
         'Swagger\Annotations\Options' => 'options',
-        'Swagger\Annotations\Parameter' => ['parameters'],
-    ];
+        'Swagger\Annotations\Parameter' => array('parameters'),
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Swagger'
-    ];
+    );
 }

@@ -16,31 +16,31 @@ use Swagger\Analysis;
  */
 class AugmentProperties
 {
-    public static $types = [
+    public static $types = array(
         'array' => 'array',
-        'byte' => ['string', 'byte'],
+        'byte' => array('string', 'byte'),
         'boolean' => 'boolean',
         'bool' => 'boolean',
         'int' => 'integer',
         'integer' => 'integer',
-        'long' => ['integer', 'long'],
-        'float' => ['number', 'float'],
-        'double' => ['number', 'double'],
+        'long' => array('integer', 'long'),
+        'float' => array('number', 'float'),
+        'double' => array('number', 'double'),
         'string' => 'string',
-        'date' => ['string', 'date'],
-        'datetime' => ['string', 'date-time'],
-        '\datetime' => ['string', 'date-time'],
-        'datetimeimmutable' => ['string', 'date-time'],
-        '\datetimeimmutable' => ['string', 'date-time'],
-        'datetimeinterface' => ['string', 'date-time'],
-        '\datetimeinterface' => ['string', 'date-time'],
+        'date' => array('string', 'date'),
+        'datetime' => array('string', 'date-time'),
+        '\datetime' => array('string', 'date-time'),
+        'datetimeimmutable' => array('string', 'date-time'),
+        '\datetimeimmutable' => array('string', 'date-time'),
+        'datetimeinterface' => array('string', 'date-time'),
+        '\datetimeinterface' => array('string', 'date-time'),
         'number' => 'number',
         'object' => 'object'
-    ];
+    );
 
     public function __invoke(Analysis $analysis)
     {
-        $refs = [];
+        $refs = array();
         /** @var Definition $definition */
         foreach ($analysis->swagger->definitions as $definition) {
             if ($definition->definition) {
@@ -80,10 +80,12 @@ class AugmentProperties
                     }
                     if ($typeMatches[2] === '[]') {
                         if ($property->items === null) {
-                            $property->items = new Items([
+                            $property->items = new Items(
+                                array(
                                 'type' => $property->type,
-                                '_context' => new Context(['generated' => true], $context)
-                            ]);
+                                '_context' => new Context(array('generated' => true), $context)
+                                )
+                            );
                             if ($property->items->type === null) {
                                 $tmpKey = strtolower($context->fullyQualifiedName($type));
                                 $property->items->ref = array_key_exists($tmpKey, $refs) ? $refs[$tmpKey] : null;

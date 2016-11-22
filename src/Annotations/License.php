@@ -27,16 +27,16 @@ class License extends AbstractAnnotation
     public $url;
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'name' => 'string',
         'url' => 'string',
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_required = ['name'];
+    public static $_required = array('name');
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Info'
-    ];
+    );
 }

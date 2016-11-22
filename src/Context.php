@@ -45,7 +45,7 @@ class Context
      * @param array $properties new properties for this context.
      * @param Context $parent The parent context
      */
-    public function __construct($properties = [], $parent = null)
+    public function __construct($properties = array(), $parent = null)
     {
         foreach ($properties as $property => $value) {
             $this->$property = $value;
@@ -158,7 +158,7 @@ class Context
 
     public function __debugInfo()
     {
-        return ['-' => $this->getDebugLocation()];
+        return array('-' => $this->getDebugLocation());
     }
 
     /**
@@ -213,7 +213,7 @@ class Context
         $comment[0] = preg_replace('/[ \t]*\\/\*\*/', '', $comment[0]); // strip '/**'
         $i = count($comment) -1;
         $comment[$i] = preg_replace('/\*\/[ \t]*$/', '', $comment[$i]); // strip '*/'
-        $lines = [];
+        $lines = array();
         $append = false;
         foreach ($comment as $line) {
             $line = ltrim($line, "\t *");

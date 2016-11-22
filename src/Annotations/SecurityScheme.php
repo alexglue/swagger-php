@@ -67,19 +67,19 @@ class SecurityScheme extends AbstractAnnotation
     public $scopes;
 
     /** @inheritdoc */
-    public static $_required = ['type'];
+    public static $_required = array('type');
 
     /** @inheritdoc */
-    public static $_types = [
-        'type' => ['basic', 'apiKey', 'oauth2'],
+    public static $_types = array(
+        'type' => array('basic', 'apiKey', 'oauth2'),
         'description' => 'string',
         'name' => 'string',
-        'in' => ['query', 'header'],
-        'flow' => ['implicit', 'password', 'application', 'accessCode']
-    ];
+        'in' => array('query', 'header'),
+        'flow' => array('implicit', 'password', 'application', 'accessCode')
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Swagger',
-    ];
+    );
 }

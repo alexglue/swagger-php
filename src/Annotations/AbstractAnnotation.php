@@ -35,13 +35,13 @@ abstract class AbstractAnnotation implements JsonSerializable
      * Annotations that couldn't be merged by mapping or postprocessing.
      * @var array
      */
-    public $_unmerged = [];
+    public $_unmerged = array();
 
     /**
      * The properties which are required by [the spec](https://github.com/swagger-api/swagger-spec/blob/master/versions/2.0.md)
      * @var array
      */
-    public static $_required = [];
+    public static $_required = array();
 
     /**
      * Specify the type of the property.
@@ -52,7 +52,7 @@ abstract class AbstractAnnotation implements JsonSerializable
      *   'in' => ["query", "header", "path", "formData", "body"] // must be one on these
      * @var array
      */
-    public static $_types = [];
+    public static $_types = array();
 
     /**
      * Declarative mapping of Annotation types to properties.
@@ -62,19 +62,19 @@ abstract class AbstractAnnotation implements JsonSerializable
      *   'Swagger\Annotation\Path' => ['paths', 'path'],  // Append @SWG\Path annotations the paths array and use path as key.
      * @var array
      */
-    public static $_nested = [];
+    public static $_nested = array();
 
     /**
      * Reverse mapping of $_nested with the allowed parent annotations.
      * @var string[]
      */
-    public static $_parents = [];
+    public static $_parents = array();
 
     /**
      * List of properties are blacklisted from the JSON output.
      * @var array
      */
-    public static $_blacklist = ['_context', '_unmerged'];
+    public static $_blacklist = array('_context', '_unmerged');
 
     /**
      * @param array $properties
@@ -90,10 +90,10 @@ abstract class AbstractAnnotation implements JsonSerializable
             $this->_context = Context::detect(1);
         }
         if ($this->_context->is('annotations') === false) {
-            $this->_context->annotations = [];
+            $this->_context->annotations = array();
         }
         $this->_context->annotations[] = $this;
-        $nestedContext = new Context(['nested' => $this], $this->_context);
+        $nestedContext = new Context(array('nested' => $this), $this->_context);
         foreach ($properties as $property => $value) {
             if (property_exists($this, $property)) {
                 $this->$property = $value;
@@ -107,7 +107,7 @@ abstract class AbstractAnnotation implements JsonSerializable
             } elseif ($property !== 'value') {
                 $this->$property = $value;
             } elseif (is_array($value)) {
-                $annotations = [];
+                $annotations = array();
                 foreach ($value as $annotation) {
                     if (is_object($annotation) && $annotation instanceof AbstractAnnotation) {
                         $annotations[] = $annotation;
@@ -117,7 +117,7 @@ abstract class AbstractAnnotation implements JsonSerializable
                 }
                 $this->merge($annotations);
             } elseif (is_object($value)) {
-                $this->merge([$value]);
+                $this->merge(array($value));
             } else {
                 Logger::notice('Unexpected parameter in ' . $this->identity());
             }
@@ -150,8 +150,8 @@ abstract class AbstractAnnotation implements JsonSerializable
      */
     public function merge($annotations, $ignore = false)
     {
-        $unmerged = [];
-        $nestedContext = new Context(['nested' => $this], $this->_context);
+        $unmerged = array();
+        $nestedContext = new Context(array('nested' => $this), $this->_context);
         foreach ($annotations as $annotation) {
             $found = false;
             foreach (static::$_nested as $class => $property) {
@@ -159,7 +159,7 @@ abstract class AbstractAnnotation implements JsonSerializable
                     if (is_array($property)) { // Append to an array?
                         $property = $property[0];
                         if ($this->$property === null) {
-                            $this->$property = [];
+                            $this->$property = array();
                         }
                         array_push($this->$property, $this->nested($annotation, $nestedContext));
                         $found = true;
@@ -226,7 +226,7 @@ abstract class AbstractAnnotation implements JsonSerializable
 
     public function __debugInfo()
     {
-        $properties = [];
+        $properties = array();
         foreach (get_object_vars($this) as $property => $value) {
             if ($value !== UNDEFINED) {
                 $properties[$property] = $value;
@@ -279,6 +279,7 @@ abstract class AbstractAnnotation implements JsonSerializable
             foreach ($this->$property as $item) {
                 $key = $item->$keyField;
                 if ($key && empty($object->$key)) {
+                    /** @var $item JsonSerializable */
                     $object->$key = $item->jsonSerialize();
                     unset($object->$key->$keyField);
                 }
@@ -301,7 +302,7 @@ abstract class AbstractAnnotation implements JsonSerializable
      * @return boolean
      * @throws Exception
      */
-    public function validate($parents = [], $skip = [])
+    public function validate($parents = array(), $skip = array())
     {
         if (in_array($this, $skip, true)) {
             return true;
@@ -320,7 +321,7 @@ abstract class AbstractAnnotation implements JsonSerializable
             } elseif ($annotation instanceof AbstractAnnotation) {
                 $message = 'Unexpected ' . $annotation->identity();
                 if (count($class::$_parents)) {
-                    $shortNotations = [];
+                    $shortNotations = array();
                     foreach ($class::$_parents as $_class) {
                         $shortNotations[] = '@' . str_replace('Swagger\Annotations\\', 'SWG\\', $_class);
                     }
@@ -340,13 +341,13 @@ abstract class AbstractAnnotation implements JsonSerializable
             if ($this->$property === null) {
                 continue;
             }
-            $keys = [];
+            $keys = array();
             $keyField = $nested[1];
             foreach ($this->$property as $item) {
                 if (empty($item->$keyField)) {
                     Logger::notice($item->identity() . ' is missing key-field: "' . $keyField . '" in ' . $item->_context);
                 } elseif (isset($keys[$item->$keyField])) {
-                    Logger::notice('Multiple ' . $item->_identity([]) . ' with the same ' . $keyField . '="' . $item->$keyField . "\":\n  " . $item->_context . "\n  " . $keys[$item->$keyField]->_context);
+                    Logger::notice('Multiple ' . $item->_identity(array()) . ' with the same ' . $keyField . '="' . $item->$keyField . "\":\n  " . $item->_context . "\n  " . $keys[$item->$keyField]->_context);
                 } else {
                     $keys[$item->$keyField] = $item;
                 }
@@ -411,13 +412,13 @@ abstract class AbstractAnnotation implements JsonSerializable
         array_pop($parents);
         
         $valid = true;
-        $blacklist = [];
+        $blacklist = array();
         if (is_object($fields)) {
             if (in_array($fields, $skip, true)) {
                 return true;
             }
             $skip[] = $fields;
-            $blacklist = property_exists($fields, '_blacklist') ? $fields::$_blacklist : [];
+            $blacklist = property_exists($fields, '_blacklist') ? $fields::$_blacklist : array();
         }
         
         foreach ($fields as $field => $value) {
@@ -446,7 +447,7 @@ abstract class AbstractAnnotation implements JsonSerializable
      */
     public function identity()
     {
-        return $this->_identity([]);
+        return $this->_identity(array());
     }
 
     /**
@@ -456,7 +457,7 @@ abstract class AbstractAnnotation implements JsonSerializable
      */
     protected function _identity($properties)
     {
-        $fields = [];
+        $fields = array();
         foreach ($properties as $property) {
             $value = $this->$property;
             if ($value !== null && $value !== UNDEFINED) {
@@ -507,7 +508,7 @@ abstract class AbstractAnnotation implements JsonSerializable
                 return true;
 
             case 'scheme':
-                return in_array($value, ['http', 'https', 'ws', 'wss']);
+                return in_array($value, array('http', 'https', 'ws', 'wss'));
 
             default:
                 throw new Exception('Invalid type "' . $type . '"');

@@ -35,7 +35,7 @@ class Analysis
      * Class definitions
      * @var array
      */
-    public $classes = [];
+    public $classes = array();
 
     /**
      * The target Swagger annotation.
@@ -53,7 +53,7 @@ class Analysis
      * @param array $annotations
      * @param null  $context
      */
-    public function __construct($annotations = [], $context = null)
+    public function __construct($annotations = array(), $context = null)
     {
         $this->annotations = new SplObjectStorage();
         if (count($annotations) !== 0) {
@@ -77,14 +77,14 @@ class Analysis
             $context = $annotation->_context;
         } else {
             if ($context->is('annotations') === false) {
-                $context->annotations = [];
+                $context->annotations = array();
             }
             if (in_array($annotation, $context->annotations, true) === false) {
                 $context->annotations[] = $annotation;
             }
         }
         $this->annotations->attach($annotation, $context);
-        $blacklist = property_exists($annotation, '_blacklist') ? $annotation::$_blacklist : [];
+        $blacklist = property_exists($annotation, '_blacklist') ? $annotation::$_blacklist : array();
         foreach ($annotation as $property => $value) {
             if (in_array($property, $blacklist)) {
                 if ($property === '_unmerged') {
@@ -142,7 +142,7 @@ class Analysis
 
     public function getSubClasses($class)
     {
-        $definitions = [];
+        $definitions = array();
         foreach ($this->classes as $subclass => $definition) {
             if ($definition['extends'] === $class) {
                 $definitions[$subclass] = $definition;
@@ -156,12 +156,12 @@ class Analysis
     {
         $classDefinition = isset($this->classes[$class]) ? $this->classes[$class] : null;
         if (!$classDefinition || empty($classDefinition['extends'])) { // unknown class, or no inheritance?
-            return [];
+            return array();
         }
         $extends = $classDefinition['extends'];
         $extendsDefinition = isset($this->classes[$extends]) ? $this->classes[$extends] : null;
         if (!$extendsDefinition) {
-            return [];
+            return array();
         }
         $definitions = array_merge([$extends => $extendsDefinition], $this->getSuperClasses($extends));
         return $definitions;
@@ -175,7 +175,7 @@ class Analysis
      */
     public function getAnnotationsOfType($class, $strict = false)
     {
-        $annotations = [];
+        $annotations = array();
         if ($strict) {
             foreach ($this->annotations as $annotation) {
                 if (get_class($annotation) === $class) {
@@ -226,7 +226,7 @@ class Analysis
             throw new Exception('No swagger target set. Run the MergeIntoSwagger processor');
         }
         $unmerged = $this->swagger->_unmerged;
-        $this->swagger->_unmerged = [];
+        $this->swagger->_unmerged = array();
         $analysis = new Analysis([$this->swagger]);
         $this->swagger->_unmerged = $unmerged;
         return $analysis;
@@ -271,7 +271,7 @@ class Analysis
             $processors = self::processors();
         }
         if (is_array($processors) === false && is_callable($processors)) {
-            $processors = [$processors];
+            $processors = array($processors);
         }
         foreach ($processors as $processor) {
             $processor($this);
@@ -286,7 +286,7 @@ class Analysis
     {
         if (!self::$processors) {
             // Add default processors.
-            self::$processors = [
+            self::$processors = array(
                 new MergeIntoSwagger(),
                 new BuildPaths(),
                 new AugmentDefinitions(),
@@ -295,7 +295,7 @@ class Analysis
                 new AugmentOperations(),
                 new AugmentParameters(),
                 new CleanUnmerged(),
-            ];
+            );
         }
         return self::$processors;
     }

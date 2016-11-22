@@ -50,23 +50,23 @@ class Info extends AbstractAnnotation
     public $version;
 
     /** @inheritdoc */
-    public static $_required = ['title', 'version'];
+    public static $_required = array('title', 'version');
 
     /** @inheritdoc */
-    public static $_types = [
+    public static $_types = array(
         'title' => 'string',
         'description' => 'string',
         'termsOfService' => 'string'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_nested = [
+    public static $_nested = array(
         'Swagger\Annotations\Contact' => 'contact',
         'Swagger\Annotations\License' => 'license'
-    ];
+    );
 
     /** @inheritdoc */
-    public static $_parents = [
+    public static $_parents = array(
         'Swagger\Annotations\Swagger'
-    ];
+    );
 }
